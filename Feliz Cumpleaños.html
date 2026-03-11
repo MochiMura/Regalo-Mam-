@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños Mamita Yuly ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --rosa-pastel: #ffafbd;
+            --rosa-fuerte: #ff4b2b;
+            --dorado: #d4af37;
+            --blanco-papel: #fff9f0;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            color: #444;
+        }
+
+        /* Fondo de Corazones Flotantes */
+        .bg-hearts {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 20px;
+            z-index: 1;
+        }
+
+        header h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 5.5rem;
+            color: white;
+            margin: 0;
+            text-shadow: 3px 3px 10px rgba(255, 75, 43, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .fecha {
+            background: white;
+            color: var(--rosa-fuerte);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Galería Estilo Polaroids Reales */
+        .album {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px;
+            perspective: 1000px;
+        }
+
+        .foto {
+            background: white;
+            padding: 15px 15px 50px 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 280px;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .foto::after { /* Chincheta decorativa */
+            content: "";
+            position: absolute;
+            top: -10px; left: 50%;
+            width: 20px; height: 20px;
+            background: rgba(255, 75, 43, 0.8);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .foto:hover {
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 10;
+        }
+
+        .foto img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            filter: sepia(20%);
+        }
+
+        /* Botón Mágico */
+        .btn-carta {
+            background: white;
+            color: var(--rosa-fuerte);
+            border: 2px solid var(--rosa-fuerte);
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            font-family: 'Dancing Script', cursive;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.4s;
+            margin: 40px 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .btn-carta:hover {
+            background: var(--rosa-fuerte);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 75, 43, 0.4);
+        }
+
+        /* Sobre y Carta */
+        #carta-container {
+            display: none;
+            width: 90%;
+            max-width: 700px;
+            margin-bottom: 100px;
+            animation: unfold 1s ease-out;
+        }
+
+        .carta {
+            background: var(--blanco-papel);
+            padding: 60px;
+            border-radius: 5px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            background-image: repeating-linear-gradient(transparent, transparent 39px, #e5e5e5 40px);
+            line-height: 40px;
+            position: relative;
+            border-left: 2px solid #ffadad;
+        }
+
+        .carta h2 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--rosa-fuerte);
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1;
+        }
+
+        .carta p {
+            font-size: 1.3rem;
+            margin: 0;
+            color: #333;
+        }
+
+        .firma {
+            text-align: right;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: var(--rosa-fuerte);
+            margin-top: 40px !important;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes unfold {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        footer {
+            padding: 40px;
+            color: white;
+            font-style: italic;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Música */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-hearts" id="bg-hearts"></div>
+
+    <header>
+        <p class="fecha">10 DE MARZO</p>
+        <h1>¡Feliz Cumpleaños, Mamita Yuly!</h1>
+    </header>
+
+    <div class="album">
+        <div class="foto" style="transform: rotate(-5deg);">
+            <img src="recuerdo1.jpg.jpg" alt="Recuerdo con mamá">
+        </div>
+        <div class="foto" style="transform: rotate(3deg);">
+            <img src="recuerdo2.jpg" alt="Momentos felices">
+        </div>
+        <div class="foto" style="transform: rotate(-2deg);">
+            <img src="recuerdo3.jpg" alt="Nuestro amor">
+        </div>
+    </div>
+
+    <button class="btn-carta" onclick="abrirSorpresa()">
+        Haz clic aquí para una sorpresa 💖
+    </button>
+
+    <div id="carta-container">
+        <div class="carta">
+            <h2>Querida Mamá,</h2>
+            <p>En este día tan especial, quise darte este pequeño detalle como una forma de demostrarte el inmenso amor y aprecio que te tengo, mi mamita Yuly.</p>
+            <p>Gracias por cada enseñanza, por tu paciencia infinita y por ser mi mejor ejemplo de fortaleza y esfuerzo. Espero que, a pesar de la distancia, la hayas pasado increíble en compañía de tus colegas.</p>
+            <p>Dentro de unos días celebraremos juntos en familia; muero por darte ese fuerte abrazo y el beso que tanto te mereces. ¡Feliz cumpleaños, mamá! Le pido a la vida que estés conmigo muchísimos años más.</p>
+            <p>Porque tanto tú, como mi papá y la Julita, son las personas más importantes de mi vida. ¡TE AMO, MAMÁ!</p>
+            <p class="firma">Con todo mi amor,<br>Sebastian Fabrisio</p>
+        </div>
+    </div>
+
+    <footer>
+        Diseñado con el corazón para la mejor mamá del mundo ❤️
+    </footer>
+
+    <script>
+        // Crear corazoncitos flotantes en el fondo
+        function crearCorazones() {
+            const container = document.getElementById('bg-hearts');
+            for(let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.style.position = 'absolute';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.opacity = Math.random() * 0.5;
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.animation = `pulse ${Math.random() * 3 + 2}s infinite`;
+                container.appendChild(heart);
+            }
+        }
+        crearCorazones();
+
+        function abrirSorpresa() {
+            // Confetti de corazones reales
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+              return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+              const timeLeft = animationEnd - Date.now();
+
+              if (timeLeft <= 0) {
+                return clearInterval(interval);
+              }
+
+              const particleCount = 50 * (timeLeft / duration);
+              
+              // Lanzamiento desde los lados
+              confetti(Object.assign({}, defaults, { 
+                particleCount, 
+                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                colors: ['#ff4b2b', '#ffafbd'],
+                shapes: ['circle'] 
+              }));
+              confetti(Object.assign({}, defaults, { 
+                particleCount, 
+                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                colors: ['#ff4b2b', '#ffafbd'],
+                shapes: ['circle']
+              }));
+            }, 250);
+
+            // Mostrar carta
+            const carta = document.getElementById('carta-container');
+            carta.style.display = 'block';
+            
+            // Intentar reproducir música si existe
+            const musica = document.getElementById('musica');
+            if(musica) musica.play();
+
+            setTimeout(() => {
+                carta.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        }
+    </script>
+</body>
+</html>
